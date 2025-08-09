@@ -34,6 +34,28 @@ describe("Text Component", () => {
     expect(textElement?.textContent).toContain("John Doe");
   });
 
+  it("applies custom className", () => {
+    render(<Text className="custom-class">Test text</Text>);
+    const textElement = screen.getByText("Test text");
+    expect(textElement).toHaveClass("custom-class");
+  });
+
+  it("combines variant classes with custom className", () => {
+    render(
+      <Text variant="section-heading" className="custom-class">
+        Test text
+      </Text>
+    );
+    const textElement = screen.getByText("Test text");
+    expect(textElement).toHaveClass("custom-class");
+    expect(textElement).toHaveClass(
+      "text-lg",
+      "font-medium",
+      "text-text-primary",
+      "leading-7"
+    );
+  });
+
   describe("variant behaviors", () => {
     const testText = "Test Content";
 

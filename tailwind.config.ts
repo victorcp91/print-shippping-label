@@ -73,6 +73,7 @@ export default {
 
       maxWidth: {
         container: "64rem", // 1024px - main container
+        "container-lg": "90rem", // 1440px - large container for big screens
         content: "62rem", // 992px - content area
         narrow: "36rem", // 576px - narrow content
       },

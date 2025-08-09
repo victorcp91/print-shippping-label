@@ -3,9 +3,14 @@ import React from "react";
 export interface TextProps {
   children: React.ReactNode;
   variant?: "body" | "section-heading" | "address-display";
+  className?: string;
 }
 
-const Text: React.FC<TextProps> = ({ children, variant = "body" }) => {
+const Text: React.FC<TextProps> = ({
+  children,
+  variant = "body",
+  className = "",
+}) => {
   const variantClasses = {
     body: "text-base font-normal text-text-primary leading-6",
 
@@ -15,7 +20,11 @@ const Text: React.FC<TextProps> = ({ children, variant = "body" }) => {
       "text-base font-normal text-text-primary leading-relaxed whitespace-pre-line",
   };
 
-  return <span className={variantClasses[variant]}>{children}</span>;
+  return (
+    <span className={`${variantClasses[variant]} ${className}`}>
+      {children}
+    </span>
+  );
 };
 
 export default Text;
