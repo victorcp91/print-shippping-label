@@ -87,3 +87,26 @@ Set these before building/starting the app (e.g., in `.env`):
 
 - `EASYPOST_API_URL`: Base URL for EasyPost API (e.g., `https://api.easypost.com/v2`).
 - `EASYPOST_API_KEY`: Your EasyPost API key.
+
+## What I’d do next
+
+- Address validation with API feedback
+  - Map EasyPost/USPS validation errors to field-level errors via `setError` (e.g., invalid ZIP, mismatched city/state).
+
+- Idempotent label purchase
+  - Send an idempotency key on “buy” to prevent double charges on retries.
+  - Add client-side retry with exponential backoff and a cancel option.
+
+- Data persistence and drafts
+  - Persist form progress in localStorage/sessionStorage with clear/reset controls.
+  - Restore after refresh or back navigation.
+
+- Observability and error handling
+  - Add monitoring (Sentry) for client/server errors; log API latency and failure rates.
+
+- Security and robustness
+  - Rate-limit API routes; validate/normalize input on the server.
+
+- Developer experience and CI/CD
+  - Pre-commit hooks (lint, test, commitlint for Conventional Commits).
+  - CI pipeline running lint, unit, a11y, and e2e headless on PRs.
