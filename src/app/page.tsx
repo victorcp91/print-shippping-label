@@ -13,9 +13,7 @@ import { SHIPPING_BREADCRUMB_STEPS } from "@/lib/constants";
 const RateSelection = dynamic(
   () => import("@/components/organisms/RateSelection"),
   {
-    loading: () => (
-      <div className="text-sm text-gray-600">Loading rates…</div>
-    ),
+    loading: () => <div className="text-sm text-gray-600">Loading rates…</div>,
   }
 );
 
