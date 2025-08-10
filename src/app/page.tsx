@@ -2,13 +2,22 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import type { ShipmentDetailsFormData } from "@/lib/schemas";
 import type { ShippingRate, ShipmentSummary } from "@/lib/types";
 import { transformToEasyPost } from "@/lib/schemas";
 import ShipmentDetailsForm from "@/components/organisms/ShipmentDetailsForm";
-import RateSelection from "@/components/organisms/RateSelection";
 import BreadcrumbNavigation from "@/components/organisms/BreadcrumbNavigation";
 import { SHIPPING_BREADCRUMB_STEPS } from "@/lib/constants";
+
+const RateSelection = dynamic(
+  () => import("@/components/organisms/RateSelection"),
+  {
+    loading: () => (
+      <div className="text-sm text-gray-600">Loading rates…</div>
+    ),
+  }
+);
 
 export default function ShipmentPage() {
   const [step, setStep] = useState<number>(1);
@@ -22,6 +31,8 @@ export default function ShipmentPage() {
   const handleShipmentSubmit = async (data: ShipmentDetailsFormData) => {
     try {
       const easyPostData = transformToEasyPost(data);
+      // Pre-warm Step 2 chunk right when submission begins
+      void import("@/components/organisms/RateSelection");
 
       const response = await fetch("/api/shipping/rates", {
         method: "POST",
