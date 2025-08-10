@@ -1,4 +1,6 @@
-// Optional: configure or set up a testing framework before each test.
-// If you delete this file, remove `setupFilesAfterEnv` from `jest.config.mjs`
-
+// Minimal Jest setup - only essential polyfills
 import "@testing-library/jest-dom";
+import { TextEncoder, TextDecoder } from "util";
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;

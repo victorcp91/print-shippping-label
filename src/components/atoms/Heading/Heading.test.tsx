@@ -7,7 +7,7 @@ describe("Heading Component", () => {
     expect(screen.getByText("ShipLabel")).toBeInTheDocument();
   });
 
-  it("renders as h1 element", () => {
+  it("renders as h1 element by default", () => {
     render(<Heading>Test Heading</Heading>);
     const heading = screen.getByRole("heading", { level: 1 });
 
@@ -20,6 +20,32 @@ describe("Heading Component", () => {
     const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toHaveTextContent("Main Title");
+  });
+
+  describe("variant variations", () => {
+    it("renders default variant as h1", () => {
+      render(<Heading variant="default">Default Heading</Heading>);
+      const heading = screen.getByRole("heading", { level: 1 });
+      expect(heading.tagName).toBe("H1");
+    });
+
+    it("renders section variant as h2", () => {
+      render(<Heading variant="section">Section Heading</Heading>);
+      const heading = screen.getByRole("heading", { level: 2 });
+      expect(heading.tagName).toBe("H2");
+    });
+
+    it("renders subsection variant as h3", () => {
+      render(<Heading variant="subsection">Subsection Heading</Heading>);
+      const heading = screen.getByRole("heading", { level: 3 });
+      expect(heading.tagName).toBe("H3");
+    });
+
+    it("renders small variant as h4", () => {
+      render(<Heading variant="small">Small Heading</Heading>);
+      const heading = screen.getByRole("heading", { level: 4 });
+      expect(heading.tagName).toBe("H4");
+    });
   });
 
   describe("content variations", () => {
@@ -117,5 +143,17 @@ describe("Heading Component", () => {
     const heading = screen.getByRole("heading", { level: 1 });
     expect(heading.closest("header")).toBeInTheDocument();
     expect(heading).toHaveTextContent("ShipLabel");
+  });
+
+  it("applies custom className", () => {
+    render(<Heading className="custom-class">Custom Heading</Heading>);
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveClass("custom-class");
+  });
+
+  it("spreads additional props", () => {
+    render(<Heading data-testid="test-heading">Test Heading</Heading>);
+    const heading = screen.getByTestId("test-heading");
+    expect(heading).toBeInTheDocument();
   });
 });

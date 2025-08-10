@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Button from "../Button";
+import Button from "./Button";
 
 describe("Button Component", () => {
   it("renders with children text", () => {
@@ -9,9 +9,13 @@ describe("Button Component", () => {
     ).toBeInTheDocument();
   });
 
-  it("handles click events", () => {
+  it("handles click events when enabled", () => {
     const handleClick = jest.fn();
-    render(<Button onClick={handleClick}>Click me</Button>);
+    render(
+      <Button onClick={handleClick} isDirty={true} isValid={true}>
+        Click me
+      </Button>
+    );
 
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -20,23 +24,12 @@ describe("Button Component", () => {
   it("renders primary variant by default", () => {
     render(<Button>Primary Button</Button>);
     const button = screen.getByRole("button");
-
     expect(button).toHaveTextContent("Primary Button");
-    expect(button.querySelector("svg")).not.toBeInTheDocument();
   });
 
-  it("automatically includes download icon for download variant", () => {
-    render(<Button variant="download">Download Label</Button>);
-    const button = screen.getByRole("button");
-
-    expect(button).toHaveTextContent("Download Label");
-    expect(button.querySelector("svg")).toBeInTheDocument();
-  });
-
-  it("automatically includes print icon for print variant", () => {
+  it("includes icon for print variant", () => {
     render(<Button variant="print">Print Label</Button>);
     const button = screen.getByRole("button");
-
     expect(button).toHaveTextContent("Print Label");
     expect(button.querySelector("svg")).toBeInTheDocument();
   });
@@ -58,7 +51,7 @@ describe("Button Component", () => {
 
   it("passes through HTML attributes", () => {
     render(
-      <Button type="submit" data-testid="submit-btn">
+      <Button type="submit" data-testid="submit-btn" aria-label="Submit form">
         Submit
       </Button>
     );
@@ -66,31 +59,26 @@ describe("Button Component", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("type", "submit");
     expect(button).toHaveAttribute("data-testid", "submit-btn");
+    expect(button).toHaveAttribute("aria-label", "Submit form");
   });
 
-  describe("variant behaviors", () => {
-    it("primary variant shows only text content", () => {
-      render(<Button variant="primary">Select</Button>);
+  describe("icon placement", () => {
+    it("places icon after text in primary variant", () => {
+      render(<Button variant="primary">Continue</Button>);
       const button = screen.getByRole("button");
+      const children = Array.from(button.childNodes);
 
-      expect(button).toHaveTextContent("Select");
-      expect(button.children).toHaveLength(0);
+      expect(children[0].textContent).toBe("Continue");
+      expect(children[1].nodeName).toBe("svg");
     });
 
-    it("download variant shows icon + text", () => {
-      render(<Button variant="download">Download</Button>);
-      const button = screen.getByRole("button");
-
-      expect(button).toHaveTextContent("Download");
-      expect(button.querySelector("svg")).toBeInTheDocument();
-    });
-
-    it("print variant shows icon + text", () => {
+    it("places icon before text in print variant", () => {
       render(<Button variant="print">Print</Button>);
       const button = screen.getByRole("button");
+      const children = Array.from(button.childNodes);
 
-      expect(button).toHaveTextContent("Print");
-      expect(button.querySelector("svg")).toBeInTheDocument();
+      expect(children[0].nodeName).toBe("svg");
+      expect(children[1].textContent).toBe("Print");
     });
   });
 });

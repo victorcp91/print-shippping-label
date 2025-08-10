@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/organisms/Header";
-import BreadcrumbNavigation from "@/components/organisms/BreadcrumbNavigation";
 import Footer from "@/components/organisms/Footer";
 
 const geistSans = Geist({
@@ -21,12 +20,6 @@ export const metadata: Metadata = {
     "Minimal web application prototype built with Next.js, React, and TypeScript that integrates with the EasyPost API to generate and print USPS shipping labels. Includes a step-by-step flow for entering shipment details, selecting USPS rates, and previewing labels for printing.",
 };
 
-const breadcrumbSteps = [
-  { id: 1, label: "Shipment Details", mobileLabel: "Details" },
-  { id: 2, label: "Select Rate", mobileLabel: "Rate" },
-  { id: 3, label: "Print Label", mobileLabel: "Print" },
-];
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -39,10 +32,7 @@ export default function RootLayout({
       >
         <div className="min-h-screen flex flex-col">
           <Header />
-          <BreadcrumbNavigation steps={breadcrumbSteps} currentStep={1} />
-          <main className="flex-1">
-            <div className="max-w-[62rem] mx-auto px-4 py-8">{children}</div>
-          </main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </div>
       </body>
