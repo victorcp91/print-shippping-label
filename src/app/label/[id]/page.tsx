@@ -1,4 +1,4 @@
-export const revalidate = 5 * 24 * 60 * 60; // 5 days
+export const revalidate = 432000; // 5 days
 
 import Heading from "@/components/atoms/Heading";
 import Text from "@/components/atoms/Text";
@@ -27,7 +27,7 @@ async function getShipment(shipmentId: string) {
 export default async function LabelPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
@@ -41,7 +41,7 @@ export default async function LabelPage({
   return (
     <>
       <BreadcrumbNavigation steps={SHIPPING_BREADCRUMB_STEPS} currentStep={3} />
-      <div className="max-w-[62rem] mx-auto px-4 py-8">
+      <main className="max-w-[62rem] mx-auto px-4 py-8">
         <div className="mb-8">
           <Heading variant="default">USPS Shipping Label</Heading>
           {trackingCode && <Text variant="body">Tracking: {trackingCode}</Text>}
@@ -67,6 +67,7 @@ export default async function LabelPage({
                 rel="noopener noreferrer"
                 isDirty
                 isValid
+                aria-label="Print label (opens in a new tab)"
               >
                 Print Label
               </Button>
@@ -77,7 +78,7 @@ export default async function LabelPage({
             <BuyOnceAndRefresh shipmentId={id} />
           </div>
         )}
-      </div>
+      </main>
     </>
   );
 }

@@ -28,10 +28,7 @@ const BreadcrumbNavigation: React.FC<BreadcrumbNavigationProps> = ({
     ].join(" ");
 
     return (
-      <div
-        key={step.id}
-        className="flex flex-col sm:flex-row sm:items-center flex-shrink-0 min-w-0 flex-1"
-      >
+      <div className="flex flex-col sm:flex-row sm:items-center flex-shrink-0 min-w-0 flex-1">
         <div className="flex justify-center sm:justify-start">
           <div className={stepClasses}>{step.id}</div>
         </div>
@@ -57,25 +54,35 @@ const BreadcrumbNavigation: React.FC<BreadcrumbNavigationProps> = ({
   };
 
   return (
-    <div className="bg-background-primary border-b border-border-light">
+    <nav
+      aria-label="Etapas do envio"
+      className="bg-background-primary border-b border-border-light"
+    >
       <div className="w-full sm:max-w-fit sm:mx-auto px-4">
-        <div className="flex items-center h-16 sm:h-14 py-2 sm:py-0">
-          <div className="flex items-center w-full">
-            {steps.map((step, index) => (
+        <ol className="flex items-center h-16 sm:h-14 py-2 sm:py-0 w-full">
+          {steps.map((step, index) => {
+            const isActive = step.id === currentStep;
+            return (
               <React.Fragment key={step.id}>
-                {renderStepIndicator(step)}
+                <li
+                  className="flex items-center w-full"
+                  aria-current={isActive ? "step" : undefined}
+                >
+                  {renderStepIndicator(step)}
+                </li>
                 {index < steps.length - 1 && (
                   <div
                     className="flex-1 h-px bg-neutral-300 mx-1 sm:mx-2 lg:mx-4 min-w-[1rem] sm:min-w-[2rem] lg:min-w-[3rem] self-center -mt-3 sm:mt-0"
                     data-testid="separator"
+                    aria-hidden="true"
                   />
                 )}
               </React.Fragment>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </ol>
       </div>
-    </div>
+    </nav>
   );
 };
 

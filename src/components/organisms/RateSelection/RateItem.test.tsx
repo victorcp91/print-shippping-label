@@ -25,10 +25,10 @@ describe("RateItem Component", () => {
     expect(screen.getByText("2 days")).toBeInTheDocument();
   });
 
-  it("marks item as selected via aria-selected when selected is true", () => {
+  it("marks item as selected via aria-pressed on the Select button when selected is true", () => {
     render(<RateItem rate={mockRate} selected={true} onSelect={jest.fn()} />);
-    const row = screen.getByTestId("rate-item-rate_1");
-    expect(row).toHaveAttribute("aria-selected", "true");
+    const button = screen.getByRole("button", { name: /select/i });
+    expect(button).toHaveAttribute("aria-pressed", "true");
   });
 
   it("does not call onSelect when row is clicked (only Select button)", async () => {

@@ -41,7 +41,11 @@ export default function BuyOnceAndRefresh({ shipmentId }: Props) {
   }
 
   return (
-    <div className="rounded bg-blue-50 p-4 text-blue-800">
+    <div
+      className="rounded bg-blue-50 p-4 text-blue-800"
+      role="status"
+      aria-live="polite"
+    >
       {status === "buying" && "Generating label…"}
       {status === "done" && "Label generated. Refreshing…"}
       {status === "error" && "Failed to generate label. Please try again."}

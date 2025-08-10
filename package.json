@@ -9,7 +9,11 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cypress:open": "cypress open --e2e",
+    "mock:easypost": "node scripts/mock-easypost.js",
+    "e2e": "start-server-and-test \"sh -c 'node scripts/mock-easypost.js & EASYPOST_API_URL=http://localhost:4010 EASYPOST_API_KEY=test_123 NEXT_PUBLIC_BASE_PATH=http://localhost:3002 next dev --turbopack -p 3002'\" http://localhost:3002 \"CYPRESS_baseUrl=http://localhost:3002 cypress open --e2e\"",
+    "e2e:headless": "start-server-and-test \"sh -c 'node scripts/mock-easypost.js & EASYPOST_API_URL=http://localhost:4010 EASYPOST_API_KEY=test_123 NEXT_PUBLIC_BASE_PATH=http://localhost:3002 next dev --turbopack -p 3002'\" http://localhost:3002 \"CYPRESS_baseUrl=http://localhost:3002 cypress run --e2e\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -31,11 +35,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cypress": "^14.5.4",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "msw": "^2.10.4",
+    "start-server-and-test": "^2.0.13",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

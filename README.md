@@ -34,6 +34,22 @@ npm run test:watch
 npm run test:coverage
 ```
 
+## Running E2E Tests (Cypress)
+
+These commands start a local mock EasyPost server (`scripts/mock-easypost.js`) on port `4010`, boot the Next.js app on port `3002`, and then run Cypress against `http://localhost:3002`.
+
+```bash
+# Open Cypress Test Runner (interactive)
+npm run e2e
+
+# Run headless (CI-friendly)
+npm run e2e:headless
+```
+
+Notes:
+
+- The mock server emulates the minimum EasyPost endpoints needed by the app.
+
 ## Production Mode
 
 1. Configure environment variables (see Environment Variables below).

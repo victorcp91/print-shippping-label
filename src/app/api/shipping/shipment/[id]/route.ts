@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function GET(_req: Request, context: { params: { id?: string } }) {
+export async function GET(_req: Request, context: unknown) {
   try {
-    const shipmentId = context?.params?.id;
+    const { params } = (context as { params?: Record<string, string> }) ?? {};
+    const shipmentId = params?.id;
     if (!shipmentId) {
       return NextResponse.json(
         { error: "Missing shipment id" },

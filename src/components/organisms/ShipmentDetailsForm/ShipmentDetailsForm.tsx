@@ -9,7 +9,6 @@ import {
   type ShipmentDetailsFormData,
   usStates,
 } from "@/lib/schemas";
-import { initialShippingData } from "@/lib/initialData";
 import FormField from "@/components/molecules/FormField";
 import FormSelectField from "@/components/molecules/FormSelectField";
 import Button from "@/components/atoms/Button";
@@ -34,48 +33,10 @@ export default function ShipmentDetailsForm({
     resolver: zodResolver(
       shipmentDetailsSchema
     ) as Resolver<ShipmentDetailsFormData>,
-    mode: "onChange",
-    defaultValues: {
-      fromName:
-        defaultValues?.fromName ?? initialShippingData.from_address.name,
-      fromStreet:
-        defaultValues?.fromStreet ?? initialShippingData.from_address.street1,
-      fromStreet2:
-        defaultValues?.fromStreet2 ?? initialShippingData.from_address.street2,
-      fromCity:
-        defaultValues?.fromCity ?? initialShippingData.from_address.city,
-      fromState:
-        defaultValues?.fromState ?? initialShippingData.from_address.state,
-      fromZipCode:
-        defaultValues?.fromZipCode ?? initialShippingData.from_address.zip,
-      fromPhone:
-        defaultValues?.fromPhone ?? initialShippingData.from_address.phone,
-      fromEmail:
-        defaultValues?.fromEmail ?? initialShippingData.from_address.email,
-      fromCountry:
-        defaultValues?.fromCountry ?? initialShippingData.from_address.country,
-      toName: defaultValues?.toName ?? initialShippingData.to_address.name,
-      toStreet:
-        defaultValues?.toStreet ?? initialShippingData.to_address.street1,
-      toStreet2:
-        defaultValues?.toStreet2 ?? initialShippingData.to_address.street2,
-      toCity: defaultValues?.toCity ?? initialShippingData.to_address.city,
-      toState: defaultValues?.toState ?? initialShippingData.to_address.state,
-      toZipCode: defaultValues?.toZipCode ?? initialShippingData.to_address.zip,
-      toPhone: defaultValues?.toPhone ?? initialShippingData.to_address.phone,
-      toEmail: defaultValues?.toEmail ?? initialShippingData.to_address.email,
-      toCountry:
-        defaultValues?.toCountry ?? initialShippingData.to_address.country,
-      weight: defaultValues?.weight ?? initialShippingData.parcel.weight,
-      length: defaultValues?.length ?? initialShippingData.parcel.length,
-      width: defaultValues?.width ?? initialShippingData.parcel.width,
-      height: defaultValues?.height ?? initialShippingData.parcel.height,
-    },
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues,
   });
-
-  React.useEffect(() => {
-    void trigger();
-  }, [trigger]);
 
   const handleFormSubmit: SubmitHandler<ShipmentDetailsFormData> = async (
     data
@@ -102,6 +63,7 @@ export default function ShipmentDetailsForm({
 
       <form
         onSubmit={handleSubmit(handleFormSubmit, onError)}
+        noValidate
         className="space-y-8"
       >
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">

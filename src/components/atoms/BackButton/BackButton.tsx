@@ -10,6 +10,7 @@ const BackButton: React.FC<BackButtonProps> = ({
   onClick,
   children = "Back",
   disabled,
+  type = "button",
   ...props
 }) => {
   const classes =
@@ -39,6 +40,7 @@ const BackButton: React.FC<BackButtonProps> = ({
       onClick={onClick}
       className={classes}
       disabled={disabled}
+      type={type}
       {...props}
     >
       <BackIcon />

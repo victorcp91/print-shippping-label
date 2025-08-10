@@ -69,7 +69,7 @@ export default function ShipmentPage() {
         steps={SHIPPING_BREADCRUMB_STEPS}
         currentStep={step}
       />
-      <div className="max-w-[62rem] mx-auto px-4 py-8">
+      <main className="max-w-[62rem] mx-auto px-4 py-8">
         {step === 1 && <ShipmentDetailsForm onSubmit={handleShipmentSubmit} />}
         {step === 2 && shipmentSummary && (
           <RateSelection
@@ -80,7 +80,7 @@ export default function ShipmentPage() {
             onBack={handleBack}
           />
         )}
-      </div>
+      </main>
     </>
   );
 }

@@ -18,7 +18,6 @@ const RateItem: React.FC<RateItemProps> = ({ rate, selected, onSelect }) => {
       className={`relative px-4 py-4 transition ${
         selected ? "bg-blue-50" : "hover:bg-gray-50"
       }`}
-      aria-selected={selected}
       data-testid={`rate-item-${rate.id}`}
     >
       <div className="grid grid-cols-12 items-center gap-4">
@@ -57,6 +56,10 @@ const RateItem: React.FC<RateItemProps> = ({ rate, selected, onSelect }) => {
               e.stopPropagation();
               onSelect(rate.id);
             }}
+            aria-pressed={selected}
+            aria-label={`Select ${rate.service} from ${rate.carrier}${
+              rate.delivery_days ? `, ${rate.delivery_days} days` : ""
+            }${rate.rate ? `, $${rate.rate}` : ""}`}
           >
             Select
           </Button>
